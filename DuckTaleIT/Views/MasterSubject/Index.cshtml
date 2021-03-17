@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DuckTaleIT.Models.MasterSubject>
+
+@{
+    ViewData["Title"] = "Subjects";
+}
+
+<h2>Subject List</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.mSubjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mSubjectCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.mSubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mSubjectCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.mSubjectId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.mSubjectId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

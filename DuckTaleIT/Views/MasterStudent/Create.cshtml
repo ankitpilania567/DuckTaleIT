@@ -1,0 +1,104 @@
+﻿@model DuckTaleIT.Models.MasterStudent
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>MasterStudent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" class="row" id="frmStudent" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group col-md-4">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+                <input type="hidden" name="SelSubjectList" value="@ViewBag.SelSubjectList" />
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="mClassName" class="control-label"></label>
+                <select asp-for="mClassName" class ="form-control" asp-items="ViewBag.mClassName">
+                </select>
+            </div>
+            <div class=" col-md-12 row">
+                <div class="col-md-6">
+                    <table class=" table table-bordered" id="tblSubjectList">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Subject Name</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (MasterSubject item in ViewBag.SubjectList)
+                                {
+                                    <tr>
+                                        <td><input type="checkbox" value="@item.mSubjectId" /></td>
+                                        <td>@item.mSubjectName</td>
+                                        <td><input type="text" placeholder="Marks" class="form-control" /></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </br>
+            <div class="form-group col-md-4">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#frmStudent').on('submit', function () {
+            var Data = [];
+              var CanSubmit = true;
+            $('#tblSubjectList tbody tr').each(function () {
+                var Chk = $(this).find('input[type=checkbox]');
+                var txt = $(this).find('input[type=text]');
+                if ($(Chk).prop('checked')) {
+                    if ($(txt).val() == "" || $(txt).val() == null) {
+                            CanSubmit = false;
+                        alert('Please Enter Marks for every selected subject!');
+                        return false;
+                    }
+                    Data.push({ id: $(Chk).val(), marks: $(txt).val() })
+                }
+                if (Data.length > 0) {
+                    $('input[name=SelSubjectList]').val(JSON.stringify(Data));
+                }
+            });
+                return CanSubmit;
+        });
+        if ($('input[name=SelSubjectList]').val() != null && $('input[name=SelSubjectList]').val() != "") {
+            var Data = JSON.parse($('input[name=SelSubjectList]').val());
+            $('#tblSubjectList tbody tr').each(function () {
+                var Chk = $(this).find('input[type=checkbox]');
+                var txt = $(this).find('input[type=text]');
+                var filterresult = Data.filter(el => el.id == $(Chk).val());
+                if (filterresult.length > 0) {
+                    $(Chk).prop('checked', true);
+                    $(txt).val(filterresult[0].marks);
+                }
+            })
+        }
+    })
+   
+</script>
+

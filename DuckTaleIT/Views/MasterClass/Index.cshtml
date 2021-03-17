@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DuckTaleIT.Models.MasterClass>
+
+@{
+    ViewData["Title"] = "Class";
+}
+
+<h4>Master Class</h4>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.mClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mClassCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.mClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mClassCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.mClassId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.mClassId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

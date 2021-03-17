@@ -1,0 +1,43 @@
+﻿@model DuckTaleIT.Models.MasterClass
+
+@{
+    ViewData["Title"] = "Edit Class";
+}
+
+<h2>Edit</h2>
+
+<h4>MasterClass</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="mClassId" />
+            <div class="form-group">
+                <label asp-for="mClassName" class="control-label"></label>
+                <input asp-for="mClassName" class="form-control" />
+                <span asp-validation-for="mClassName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mClassCode" class="control-label"></label>
+                <input asp-for="mClassCode" class="form-control" />
+                <span asp-validation-for="mClassCode" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
